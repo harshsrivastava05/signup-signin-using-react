@@ -2,11 +2,15 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
+import { useState } from 'react';
 
 
 
 
 function Signin() {
+    const [username, setusername] = useState("")
+    const [password, setpassword] = useState("")
+
     return (
         <div>
 
@@ -32,7 +36,9 @@ function Signin() {
 
                     <TextField
                         fullWidth
-                        id="username"
+                        onChange={(e) => {
+                            setusername(e.target.value)
+                        }}
                         label="username"
                         variant="outlined" />
 
@@ -43,7 +49,9 @@ function Signin() {
 
                     <TextField
                         fullWidth
-                        id="password"
+                        onChange={(e) => {
+                            setpassword(e.target.value)
+                        }}
                         label="password"
                         variant="outlined"
                         type="password" />
@@ -55,17 +63,20 @@ function Signin() {
                     <Button
                         size='large'
                         onClick={() => {
-                            let username = document.getElementById("username").value;
-                            let password = document.getElementById("password").value;
+
                             fetch("http://localhost:3000/admin/signin", {
                                 method: "POST",
                                 body: JSON.stringify({
-                                    username,
-                                    password
+                                    username: username,
+                                    password: password
                                 }),
                                 headers: {
                                     "content-type": "application/json"
                                 }
+                            }).then((res) => {
+                                res.json().then((data) => {
+                                    console.log(data)
+                                })
                             })
                         }}
                         variant="contained">
