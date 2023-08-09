@@ -1,45 +1,45 @@
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button';
-
+import {Typography} from "@mui/material";
+import Button from "@mui/material/Button";
+import {useNavigate} from "react-router-dom";
 
 function Appbar() {
-    return (
-        <div style={{
-            display: "flex",
-            justifyContent: "space-between",
-            padding:"4px"
-        }}>
-            <div>
-                <Typography variant='h5'>coursera</Typography>
-            </div>
-            <div style={{
-                display: "flex",
-            }}>
-                <div style={{
-                    marginRight: 10
-                }}>
-
-                    <Button 
-                    onClick={()=>{
-                        window.location = "/signup"
-                    }}
-                    variant='outlined'>
-                        sign up
-                    </Button>
-                </div>
-                <div>
-                    <Button 
-                    onClick = {()=> {
-                        window.location = "/signin"
-                    }}
-                    variant='outlined'>
-                        sign in
-                    </Button>
-                </div>
-            </div>
-
+    const navigate = useNavigate()
+    return <div style={{
+        display: "flex",
+        justifyContent: "space-between",
+        padding: 4
+    }}>
+        <div>
+            <Typography variant={"h6"}>Coursera</Typography>
         </div>
-    )
+
+        <div style={{display: "flex"}}>
+            <div style={{marginRight: 10}}>
+                <Button
+                    variant={"contained"}
+                    onClick={() => {
+                        navigate("/admin/signup")
+                    }}
+                >Signup</Button>
+            </div>
+            <div>
+                <Button
+                    variant={"contained"}
+                    onClick={() => {
+                        navigate("/admin/signin")
+                    }}
+                >Signin</Button>
+            </div>
+            <div style={{marginLeft : 10}}>
+                <Button
+                    variant={"contained"}
+                    onClick={() => {
+                        navigate("/admin/courses")
+                    }}
+                >add course</Button>
+            </div>
+        </div>
+    </div>
 }
 
 export default Appbar;
