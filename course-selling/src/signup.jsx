@@ -2,14 +2,19 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
+import { useState } from 'react';
 
 
 
 
 function Signup() {
+    const[username,setusername] = useState("")
+    const[email,setemail] = useState("")
+    const[password,setpassword] = useState("")
+    const[confirmpassword,setconfirmpassword] = useState("")
+
     return (
         <div>
-
             <div style={{
                 paddingTop: 150,
                 marginBottom: 4,
@@ -32,7 +37,9 @@ function Signup() {
 
                     <TextField
                         fullWidth
-                        id="username"
+                       onChange={(e) => {
+                        setusername(e.target.value)
+                       }}
                         label="username"
                         variant="outlined" />
 
@@ -40,7 +47,9 @@ function Signup() {
 
                     <TextField
                         fullWidth
-                        id="email"
+                        onChange={(e) => {
+                            setemail(e.target.value)
+                           }}
                         label="email"
                         variant="outlined" />
 
@@ -48,7 +57,9 @@ function Signup() {
 
                     <TextField
                         fullWidth={true}
-                        id="password"
+                        onChange={(e) => {
+                            setpassword(e.target.value)
+                           }}
                         label="password"
                         variant="outlined"
                         type="password" />
@@ -57,7 +68,9 @@ function Signup() {
 
                     <TextField
                         fullWidth
-                        id="confirmpassword"
+                        onChange={(e) => {
+                            setconfirmpassword(e.target.value)
+                           }}
                         label="confirm password"
                         variant="outlined"
                         type="password" />
@@ -67,23 +80,24 @@ function Signup() {
                     <Button
                         size='large'
                         onClick={() => {
-                            let username = document.getElementById("username").value;
-                            let email = document.getElementById("email").value;
-                            let password = document.getElementById("password").value;
-                            let confirmpassword = document.getElementById("confirmpassword").value;
+                          
                             fetch("http://localhost:3000/admin/signup", {
                                 method: "POST",
                                 body: JSON.stringify({
-                                    username,
-                                    email,
-                                    password,
-                                    confirmpassword
+                                    username: username,
+                                    email: email,
+                                    password: password,
+                                    confirmpassword: confirmpassword
                                 }),
                                 headers: {
                                     "content-type": "application/json"
                                 }
                             })
-
+                                .then((res) => {
+                                    res.json().then((data) => {
+                                        console.log(data);
+                                    })
+                                })
                         }}
                         variant="contained">sign up</Button>
 
