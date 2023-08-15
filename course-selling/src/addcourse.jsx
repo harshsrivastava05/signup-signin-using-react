@@ -4,11 +4,15 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import { useScrollTrigger } from '@mui/material';
 import { useState } from 'react';
+import Checkbox from '@mui/material/Checkbox';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import { red } from '@mui/material/colors';
 
 
 function Addcourse() {
-    const[title,settitle] = useState("")
-    const[Description,setdescription] = useState("")
+    const [title, settitle] = useState("");
+    const [Description, setdescription] = useState("");
+    const [published, setPublished] = useState(false);
 
     return (
         <div>
@@ -55,25 +59,40 @@ function Addcourse() {
                         label="Description"
                         variant="outlined" />
 
-                    <br /><br />
+                    <br />
+                    <div
+                    style={{
+                        marginTop:13
+                    }}>
+                        <FormControlLabel control={
+                        <Checkbox 
+                        checked={published}
+                        onChange={(e)=>{
+                            setPublished(e.target.checked);
+                        }}
+                        />} 
+                        label="publish the course" />
+                    </div>
+
+                    <br />
 
                     <Button
                         size='large'
                         onClick={() => {
-                            fetch("http://localhost:3000/admin/courses", {
+                            fetch("http://localhost:3000/admin/addcourse", {
                                 method: "POST",
                                 body: JSON.stringify({
-                                   title : title,
-                                   Description: Description,
-                                   imageLink: "",
-                                   published: true
+                                    title: title,
+                                    Description: Description,
+                                    imageLink: "",
+                                    published: published
                                 }),
                                 headers: {
                                     "content-type": "application/json",
                                     "Authorization": "Bearer " + localStorage.getItem("token")
                                 }
-                            }).then((res)=>{
-                                res.json().then((data)=>{
+                            }).then((res) => {
+                                res.json().then((data) => {
                                     localStorage.setItem("token", data.token);
                                 })
                             })
@@ -81,6 +100,12 @@ function Addcourse() {
                         variant="contained">
                         add course
                     </Button>
+<br /><br />
+                    <div
+                    style={{ color: published ? 'initial' : 'red' }}>
+                        {published ? '*Published' : '*Not Published'}
+                    </div>
+    
                 </Card>
             </div>
 
