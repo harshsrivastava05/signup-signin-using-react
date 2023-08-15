@@ -34,7 +34,7 @@ function Appbar() {
                 <Button
                     variant={"contained"}
                     onClick={() => {
-                        navigate("/admin/courses")
+                        navigate("/admin/addcourse")
                     }}
                 >add course</Button>
             </div>
