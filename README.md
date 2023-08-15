@@ -5,3 +5,12 @@ signup take username, email, password and confirm password as insput to succesfu
 
 signin takes username and password as input and check whether the user/admin exists or not.
 if the user/admin already exists, the user or admin successfully logs in and if they are not registerd then it sends a json message saying " user does not exist".
+
+signup form
+![image](https://github.com/harshsrivastava05/signup-signin-using-react/assets/130855160/6fb7f7ae-159e-4e4c-831d-776a13677a3f)
+
+signin form
+![image](https://github.com/harshsrivastava05/signup-signin-using-react/assets/130855160/5c1e7d36-bd06-4bd8-a75e-cf2cdd8556e0)
+
+addcourse form
+![image](https://github.com/harshsrivastava05/signup-signin-using-react/assets/130855160/abb03ade-9b17-4888-b934-23a204e68974)
