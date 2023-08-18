@@ -8,10 +8,10 @@ import { useState } from 'react';
 
 
 function Signup() {
-    const[username,setusername] = useState("")
-    const[email,setemail] = useState("")
-    const[password,setpassword] = useState("")
-    const[confirmpassword,setconfirmpassword] = useState("")
+    const [username, setusername] = useState("")
+    const [email, setemail] = useState("")
+    const [password, setpassword] = useState("")
+    const [confirmpassword, setconfirmpassword] = useState("")
 
     return (
         <div>
@@ -37,9 +37,9 @@ function Signup() {
 
                     <TextField
                         fullWidth
-                       onChange={(e) => {
-                        setusername(e.target.value)
-                       }}
+                        onChange={(e) => {
+                            setusername(e.target.value)
+                        }}
                         label="username"
                         variant="outlined" />
 
@@ -49,7 +49,7 @@ function Signup() {
                         fullWidth
                         onChange={(e) => {
                             setemail(e.target.value)
-                           }}
+                        }}
                         label="email"
                         variant="outlined" />
 
@@ -59,7 +59,7 @@ function Signup() {
                         fullWidth={true}
                         onChange={(e) => {
                             setpassword(e.target.value)
-                           }}
+                        }}
                         label="password"
                         variant="outlined"
                         type="password" />
@@ -70,7 +70,7 @@ function Signup() {
                         fullWidth
                         onChange={(e) => {
                             setconfirmpassword(e.target.value)
-                           }}
+                        }}
                         label="confirm password"
                         variant="outlined"
                         type="password" />
@@ -79,9 +79,16 @@ function Signup() {
 
                     <Button
                         size='large'
-                        onClick={() => {
-                          
-                            fetch("http://localhost:3000/admin/signup", {
+                        onClick={ () => {
+
+                            const header = {
+                                "Authorization": "Bearer " + localStorage.getItem("token")
+                               }
+    
+                               console.log(localStorage.getItem("token"))
+                               console.log(header)
+
+                            const response = fetch("http://localhost:3000/admin/signup", {
                                 method: "POST",
                                 body: JSON.stringify({
                                     username: username,
@@ -93,11 +100,11 @@ function Signup() {
                                     "content-type": "application/json"
                                 }
                             })
-                                .then((res) => {
-                                    res.json().then((data) => {
-                                       localStorage.setItem("token" , data.token);
-                                    })
-                                })
+                            if (( response).ok) {
+                                const data =  response.json();
+                                console.log(data);
+                                localStorage.setItem("token", data.token)
+                            }
                         }}
                         variant="contained">sign up</Button>
 
