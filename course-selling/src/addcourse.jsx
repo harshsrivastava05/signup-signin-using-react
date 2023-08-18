@@ -93,7 +93,7 @@ function Addcourse() {
                                 }
                             }).then((res) => {
                                 res.json().then((data) => {
-                                    localStorage.setItem("token", data.token);
+                                    
                                 })
                             })
                         }}
