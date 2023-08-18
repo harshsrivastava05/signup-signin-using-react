@@ -12,6 +12,8 @@ import { red } from '@mui/material/colors';
 function Addcourse() {
     const [title, settitle] = useState("");
     const [Description, setdescription] = useState("");
+    const [price , setprice] = useState("");
+    const [imageLink, setimagelink] = useState("");
     const [published, setPublished] = useState(false);
 
     return (
@@ -59,7 +61,28 @@ function Addcourse() {
                         label="Description"
                         variant="outlined" />
 
-                    <br />
+                    <br /><br />
+
+                    <TextField
+                        fullWidth
+                        onChange={(e) => {
+                            setprice(e.target.value)
+                        }}
+                        label="Enter the price"
+                        variant="outlined" />
+
+                        <br /><br />
+
+                        <TextField
+                        fullWidth
+                        onChange={(e) => {
+                            setimagelink(e.target.value)
+                        }}
+                        label="Course image link"
+                        variant="outlined" />
+
+
+
                     <div
                     style={{
                         marginTop:13
@@ -78,12 +101,14 @@ function Addcourse() {
 
                     <Button
                         size='large'
-                        onClick={() => {
-                            fetch("http://localhost:3000/admin/addcourse", {
+                        onClick={ async () => {
+                            
+                            const response =fetch("http://localhost:3000/admin/addcourse", {
                                 method: "POST",
                                 body: JSON.stringify({
                                     title: title,
                                     Description: Description,
+                                    price: price,
                                     imageLink: "",
                                     published: published
                                 }),
@@ -91,11 +116,9 @@ function Addcourse() {
                                     "content-type": "application/json",
                                     "Authorization": "Bearer " + localStorage.getItem("token")
                                 }
-                            }).then((res) => {
-                                res.json().then((data) => {
-                                    
-                                })
                             })
+
+                           
                         }}
                         variant="contained">
                         add course
