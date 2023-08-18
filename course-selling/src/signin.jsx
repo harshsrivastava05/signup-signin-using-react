@@ -62,9 +62,16 @@ function Signin() {
 
                     <Button
                         size='large'
-                        onClick={() => {
+                        onClick={async () => {
 
-                            fetch("http://localhost:3000/admin/signin", {
+                           const header = {
+                            "Authorization": "Bearer " + localStorage.getItem("token")
+                           }
+
+                           console.log(localStorage.getItem("token"))
+                           console.log(header)
+
+                            const response = fetch("http://localhost:3000/admin/signin", {
                                 method: "POST",
                                 body: JSON.stringify({
                                     username: username,
@@ -73,12 +80,15 @@ function Signin() {
                                 headers: {
                                     "content-type": "application/json"
                                 }
-                            }).then((res) => {
-                                res.json().then((data) => {
-                                    console.log(data)
-                                })
-                            })
-                        }}
+                            });
+                           
+                            if ( await response.ok) {
+                                const data = await response.json();
+                                console.log(data);
+                                localStorage.setItem("token", data.token);
+                            } 
+                        }
+                        }
                         variant="contained">
                         sign in
                     </Button>
