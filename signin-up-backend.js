@@ -58,7 +58,7 @@ const authenticateJwt = (req, res, next) => {
 
 //connect to mongodb
 mongoose.connect(
-  "mongodb+srv://harshsrivastava07:manya1234harsh@cluster0.bsbrmty.mongodb.net/",
+  "mongodb+srv://harshsrivastava07:******@cluster0.bsbrmty.mongodb.net/",
   { useNewUrlParser: true, useUnifiedTopology: true, dbName: "courses" }
 );
 
