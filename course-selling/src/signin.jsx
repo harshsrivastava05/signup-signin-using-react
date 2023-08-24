@@ -64,14 +64,9 @@ function Signin() {
                         size='large'
                         onClick={async () => {
 
-                           const header = {
-                            "Authorization": "Bearer " + localStorage.getItem("token")
-                           }
+                          
 
-                           console.log(localStorage.getItem("token"))
-                           console.log(header)
-
-                            const response = fetch("http://localhost:3000/admin/signin", {
+                            fetch("http://localhost:3000/admin/signin", {
                                 method: "POST",
                                 body: JSON.stringify({
                                     username: username,
@@ -80,13 +75,13 @@ function Signin() {
                                 headers: {
                                     "content-type": "application/json"
                                 }
-                            });
-                           
-                            if ( await response.ok) {
-                                const data = await response.json();
-                                console.log(data);
-                                localStorage.setItem("token", data.token);
-                            } 
+                            }).then((res)=>{
+                                res.json().then((data)=>{
+                                    console.log(data);
+                                    localStorage.setItem("token", data.token);
+                                    window.location = "/admin/course";
+                                })
+                            })
                         }
                         }
                         variant="contained">
