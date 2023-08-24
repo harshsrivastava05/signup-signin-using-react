@@ -79,16 +79,11 @@ function Signup() {
 
                     <Button
                         size='large'
-                        onClick={ () => {
+                        onClick={async () => {
 
-                            const header = {
-                                "Authorization": "Bearer " + localStorage.getItem("token")
-                               }
-    
-                               console.log(localStorage.getItem("token"))
-                               console.log(header)
+                           
 
-                            const response = fetch("http://localhost:3000/admin/signup", {
+                            fetch("http://localhost:3000/admin/signup", {
                                 method: "POST",
                                 body: JSON.stringify({
                                     username: username,
@@ -99,12 +94,16 @@ function Signup() {
                                 headers: {
                                     "content-type": "application/json"
                                 }
+                            }).then((res)=>{
+                                res.json().then((data)=>{
+                                    console.log(data);
+                                    localStorage.setItem("token", data.token);
+                                    window.location = "/admin/addcourse";
+                                })
                             })
-                            if (( response).ok) {
-                                const data =  response.json();
-                                console.log(data);
-                                localStorage.setItem("token", data.token)
-                            }
+
+
+                           
                         }}
                         variant="contained">sign up</Button>
 
