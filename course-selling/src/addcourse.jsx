@@ -11,7 +11,7 @@ import { red } from '@mui/material/colors';
 
 function Addcourse() {
     const [title, settitle] = useState("");
-    const [Description, setdescription] = useState("");
+    const [description, setdescription] = useState("");
     const [price , setprice] = useState("");
     const [imageLink, setimagelink] = useState("");
     const [published, setPublished] = useState(false);
@@ -103,25 +103,31 @@ function Addcourse() {
                         size='large'
                         onClick={ async () => {
                             
-                            const response =fetch("http://localhost:3000/admin/addcourse", {
+                           fetch("http://localhost:3000/admin/addcourse", {
                                 method: "POST",
                                 body: JSON.stringify({
                                     title: title,
-                                    Description: Description,
+                                    description: description,
                                     price: price,
-                                    imageLink: "",
+                                    imageLink: imageLink,
                                     published: published
                                 }),
                                 headers: {
                                     "content-type": "application/json",
                                     "Authorization": "Bearer " + localStorage.getItem("token")
                                 }
+                            
+
+                            }).then((res)=>{
+                                res.json().then((data)=>{
+                                    console.log(data)
+                                    alert("course added succesfuly!!")
+                                })
                             })
 
-                           
                         }}
                         variant="contained">
-                        add course
+                        Add course
                     </Button>
 <br /><br />
                     <div
