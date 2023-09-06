@@ -6,13 +6,15 @@ import { useScrollTrigger } from '@mui/material';
 import { useState } from 'react';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import axios from 'axios';
 import { red } from '@mui/material/colors';
+
 
 
 function Addcourse() {
     const [title, settitle] = useState("");
     const [description, setdescription] = useState("");
-    const [price , setprice] = useState("");
+    const [price, setprice] = useState("");
     const [imageLink, setimagelink] = useState("");
     const [published, setPublished] = useState(false);
 
@@ -71,9 +73,9 @@ function Addcourse() {
                         label="Enter the price"
                         variant="outlined" />
 
-                        <br /><br />
+                    <br /><br />
 
-                        <TextField
+                    <TextField
                         fullWidth
                         onChange={(e) => {
                             setimagelink(e.target.value)
@@ -84,57 +86,50 @@ function Addcourse() {
 
 
                     <div
-                    style={{
-                        marginTop:13
-                    }}>
+                        style={{
+                            marginTop: 13
+                        }}>
                         <FormControlLabel control={
-                        <Checkbox 
-                        checked={published}
-                        onChange={(e)=>{
-                            setPublished(e.target.checked);
-                        }}
-                        />} 
-                        label="publish the course" />
+                            <Checkbox
+                                checked={published}
+                                onChange={(e) => {
+                                    setPublished(e.target.checked);
+                                }}
+                            />}
+                            label="publish the course" />
                     </div>
 
                     <br />
 
                     <Button
                         size='large'
-                        onClick={ async () => {
-                            
-                           fetch("http://localhost:3000/admin/addcourse", {
-                                method: "POST",
-                                body: JSON.stringify({
-                                    title: title,
-                                    description: description,
-                                    price: price,
-                                    imageLink: imageLink,
-                                    published: published
-                                }),
+                        onClick={async () => {
+                            const res = await axios.post("http://localhost:3000/admin/addcourse", {
+                                title: title,
+                                description: description,
+                                price: price,
+                                imageLink: imageLink,
+                                published: published
+                            },{
                                 headers: {
                                     "content-type": "application/json",
                                     "Authorization": "Bearer " + localStorage.getItem("token")
                                 }
-                            
-
-                            }).then((res)=>{
-                                res.json().then((data)=>{
-                                    console.log(data)
-                                    alert("course added succesfuly!!")
-                                })
                             })
+                            const data = res.data;
+                            console.log(data)
+                            alert("course added succesfuly!!")
 
                         }}
                         variant="contained">
                         Add course
                     </Button>
-<br /><br />
+                    <br /><br />
                     <div
-                    style={{ color: published ? 'initial' : 'red' }}>
+                        style={{ color: published ? 'initial' : 'red' }}>
                         {published ? '*Published' : '*Not Published'}
                     </div>
-    
+
                 </Card>
             </div>
 
