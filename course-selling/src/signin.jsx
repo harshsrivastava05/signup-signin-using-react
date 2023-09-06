@@ -3,6 +3,7 @@ import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import { useState } from 'react';
+import axios from 'axios';
 
 
 
@@ -63,25 +64,13 @@ function Signin() {
                     <Button
                         size='large'
                         onClick={async () => {
-
-                          
-
-                            fetch("http://localhost:3000/admin/signin", {
-                                method: "POST",
-                                body: JSON.stringify({
-                                    username: username,
-                                    password: password
-                                }),
-                                headers: {
-                                    "content-type": "application/json"
-                                }
-                            }).then((res)=>{
-                                res.json().then((data)=>{
-                                    console.log(data);
-                                    localStorage.setItem("token", data.token);
-                                    window.location = "/admin/course";
-                                })
+                            const res = await axios.post("http://localhost:3000/admin/signin", {
+                                username: username,
+                                password: password
                             })
+                            const data = res.data;
+                            localStorage.setItem("token", data.token);
+                            window.location = "/admin/course";
                         }
                         }
                         variant="contained">
