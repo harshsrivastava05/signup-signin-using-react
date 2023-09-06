@@ -6,6 +6,8 @@ import Card from '@mui/material/Card';
 import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
+import axios from 'axios';
+
 
 
 function CourseId() {
@@ -17,7 +19,7 @@ function CourseId() {
         imageLink: "",
         published: false
     });
-   
+
     const [title, settitle] = useState("");
     const [description, setdescription] = useState("");
     const [price, setprice] = useState("");
@@ -26,23 +28,24 @@ function CourseId() {
 
 
     useEffect(() => {
-        fetch(`http://localhost:3000/admin/course/${courseId}`, {
-            method: "GET",
-            headers: {
-                "content-type": "application/json",
-                "Authorization": "Bearer " + localStorage.getItem("token")
-            }
-        }).then((res) => {
-            res.json().then((data) => {
-                console.log(data.Course);
-                setCourse(data.Course);
-                settitle(data.Course.title); // Set initial values for text fields
-                setdescription(data.Course.description);
-                setprice(data.Course.price);
-                setimagelink(data.Course.imageLink);
-                setPublished(data.Course.published);
+        async function fetchData() {
+            const res = await axios.get(`http://localhost:3000/admin/course/${courseId}`, {
+                headers: {
+                    "content-type": "application/json",
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                }
             })
-        })
+            const data = res.data;
+            console.log(data.Course);
+            setCourse(data.Course);
+            settitle(data.Course.title); 
+            setdescription(data.Course.description);
+            setprice(data.Course.price);
+            setimagelink(data.Course.imageLink);
+            setPublished(data.Course.published);
+        };
+        fetchData();
+
     }, [courseId])
 
 
@@ -142,46 +145,38 @@ function CourseId() {
 
                     <br />
                     <div style={{
-                        display:"flex",
-                        justifyContent:"space-around"
-                    }}> 
-                    <Button
-                        size='large'
-                        onClick={() => {
-
-                            fetch(`http://localhost:3000/admin/course/${courseId}`, {
-                                method: "PUT",
-                                body: JSON.stringify({
+                        display: "flex",
+                        justifyContent: "space-around"
+                    }}>
+                        <Button
+                            size='large'
+                            onClick={async () => {
+                                const res = await axios.put(`http://localhost:3000/admin/course/${courseId}`,{
                                     title: title,
-                                    description: description,
-                                    price: price,
-                                    imageLink: imageLink,
-                                    published: published
-                                }),
-                                headers: {
-                                    "content-type": "application/json",
-                                    "Authorization": "Bearer " + localStorage.getItem("token")
-                                }
+                                        description: description,
+                                        price: price,
+                                        imageLink: imageLink,
+                                        published: published
+                                },{
+                                    headers: {
+                                        "content-type": "application/json",
+                                        "Authorization": "Bearer " + localStorage.getItem("token")
+                                    }
+                                });
+                                const data = res.data;
+                                alert("course updated succesfuly!!");
 
-
-                            }).then((res) => {
-                                res.json().then((data) => {
-                                    console.log(data)
-                                    alert("course updated succesfuly!!")
-                                })
-                            })
-
-                        }
-                    }
-                        variant="contained">
-                        Update course
-                    </Button>
-                    <Button
-                        variant={"contained"}
-                        onClick={() => {
-                            window.location ="/admin/course"
-                        }}
-                    >Go back</Button>
+                            }
+                            }
+                            variant="contained">
+                            Update course
+                        </Button>
+                        <Button
+                            variant={"contained"}
+                            onClick={() => {
+                                window.location = "/admin/course"
+                            }}
+                        >Go back</Button>
                     </div>
                     <br /><br />
 
