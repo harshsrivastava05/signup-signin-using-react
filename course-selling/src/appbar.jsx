@@ -3,6 +3,7 @@ import Button from "@mui/material/Button";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 
 function Appbar() {
@@ -11,22 +12,15 @@ function Appbar() {
     const [useremail, setuseremail] = useState(null)
     useEffect(() => {
 
-        fetch("http://localhost:3000/admin/me", {
-            method: "GET",
-
+        axios.get("http://localhost:3000/admin/me", {
             headers: {
                 "Authorization": "Bearer " + localStorage.getItem("token")
             }
         }).then((res) => {
-            res.json().then((data) => {
-                const name = data.username;
-
-                setuseremail(name);
-            })
+            const data = res.data;
+            const name = data.username;
+            setuseremail(name);
         })
-
-
-
     }
         , []);
 
