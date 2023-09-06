@@ -4,28 +4,25 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import CardActions from '@mui/material/CardActions';
 import Button from "@mui/material/Button";
-
+import axios from 'axios';
 import { flexbox } from "@mui/system";
 
 function Courses() {
 
     const [courses, setcourses] = useState([]);
 
-    useEffect(() => {
-        fetch("http://localhost:3000/admin/course", {
-            method: "GET",
-            headers: {
-                "Authorization": "Bearer " + localStorage.getItem("token")
-            }
-        }).then((res) => {
-            res.json().then((data) => {
-                console.log(data.allcourses);
-                setcourses(data.allcourses);
+    useEffect( () => {
+        
+            axios.get("http://localhost:3000/admin/course",{
+                headers: {
+                    "Authorization": "Bearer " + localStorage.getItem("token")
+                }
+            }).then((res)=>{
+                console.log(res.data.allcourses);
+            setcourses(res.data.allcourses);
             })
-        })
-
-
-    }, [])
+                  
+    }, []);
 
     return (<div>
 
@@ -37,7 +34,7 @@ function Courses() {
            }}>
             Your present courses
             </Typography>
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
+        <div style={{ display: "flex", flexWrap: "wrap" , justifyContent: "center" }}>
             {courses.map((course) => (
                 <Course key={course._id} course={course} />
                 ))}
