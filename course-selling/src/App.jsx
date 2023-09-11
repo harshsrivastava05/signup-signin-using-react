@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route , Navigate } from 'react-router-dom';
 import Appbar from "./appbar.jsx";
 import Signin from "./signin.jsx";
 import Addcourse from "./addcourse.jsx";
@@ -23,6 +23,7 @@ function App() {
                 <Route path="/admin/addcourse" element={<Addcourse />} />
                 <Route path="/admin/course" element={<Courses />} />
                 <Route path="/admin/course/:courseId" element={<CourseId />} />
+                <Route path="*" element={< Navigate to="/" />} />
                 </Routes>
             </Router>
         </div>
