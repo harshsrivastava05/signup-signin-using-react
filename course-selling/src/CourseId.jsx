@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -25,6 +26,7 @@ function CourseId() {
     const [price, setprice] = useState("");
     const [imageLink, setimagelink] = useState("");
     const [published, setPublished] = useState(false);
+    const navigate = useNavigate();
 
 
     useEffect(() => {
@@ -52,12 +54,21 @@ function CourseId() {
     return (
 
         <div>
+             <div style={{
+            marginTop:"10px",
+            height: "50vh",
+            width: "100vw",
+            borderRadius:"30px",
+            background: "rgb(2,0,36)",
+            background: "linear-gradient(90deg, rgba(2,0,36,1) 0%, rgba(121,9,111,1) 35%, rgba(6,188,224,1) 100%)"
+        }}>
 
             <div style={{
-                paddingTop: 150,
+                paddingTop: 70,
                 marginBottom: 4,
                 display: "flex",
-                justifyContent: "center"
+                justifyContent: "center",
+                color:"antiquewhite"
             }}>
                 <Typography variant='h5'>Update your course</Typography>
             </div>
@@ -174,7 +185,8 @@ function CourseId() {
                         <Button
                             variant={"contained"}
                             onClick={() => {
-                                window.location = "/admin/course"
+                                // window.location = "/admin/course"
+                                navigate("/admin/course");
                             }}
                         >Go back</Button>
                     </div>
@@ -183,7 +195,7 @@ function CourseId() {
 
                 </Card>
             </div>
-
+</div>
         </div>
 
 
